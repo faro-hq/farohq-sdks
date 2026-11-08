@@ -68,8 +68,8 @@ Cada registro precisa de uma conta do FaroHQ e de um segredo no GitHub
 3. **Account → Generate User Token**. Cadastre os dois valores:
 
    ```bash
-   gh secret set MAVEN_CENTRAL_USERNAME -R joseaugustopaivajr/farohq-sdks   # cola o "username" do token
-   gh secret set MAVEN_CENTRAL_PASSWORD -R joseaugustopaivajr/farohq-sdks   # cola o "password" do token
+   gh secret set MAVEN_CENTRAL_USERNAME -R faro-hq/farohq-sdks   # cola o "username" do token
+   gh secret set MAVEN_CENTRAL_PASSWORD -R faro-hq/farohq-sdks   # cola o "password" do token
    ```
 
 4. Chave de assinatura (o Maven Central exige pacotes assinados). A chave **já foi gerada** e a parte
@@ -84,8 +84,8 @@ Cada registro precisa de uma conta do FaroHQ e de um segredo no GitHub
    | `fingerprint.txt` | Identificação: `1F339A3AB7710CFDD6F95BCB96D5A5F26908E3A4` |
 
    ```bash
-   gh secret set SIGNING_KEY -R joseaugustopaivajr/farohq-sdks < ~/.farohq-release/signing-key.asc
-   gh secret set SIGNING_KEY_PASSWORD -R joseaugustopaivajr/farohq-sdks < ~/.farohq-release/signing-key-passphrase.txt
+   gh secret set SIGNING_KEY -R faro-hq/farohq-sdks < ~/.farohq-release/signing-key.asc
+   gh secret set SIGNING_KEY_PASSWORD -R faro-hq/farohq-sdks < ~/.farohq-release/signing-key-passphrase.txt
    ```
 
    A chave vence em 2031. Para renovar: `gpg --quick-set-expire <fingerprint> 5y`, depois
@@ -97,7 +97,7 @@ Cada registro precisa de uma conta do FaroHQ e de um segredo no GitHub
 2. **Access Tokens → Generate New Token → Granular**: permissão **Read and write** só para a
    organização `farohqbr`, validade longa, e marque **Bypass two-factor authentication (2FA)** (sem isso o npm responde 403).
 3. ```bash
-   gh secret set NPM_TOKEN -R joseaugustopaivajr/farohq-sdks
+   gh secret set NPM_TOKEN -R faro-hq/farohq-sdks
    ```
 
 Os pacotes saem com **provenance** (selo do npm de que vieram deste repositório público, por este
@@ -113,7 +113,7 @@ Não usa token: o PyPI confia no GitHub (Trusted Publishing).
    | Campo | Valor |
    |---|---|
    | PyPI Project Name | `farohq` |
-   | Owner | `joseaugustopaivajr` |
+   | Owner | `faro-hq` |
    | Repository name | `farohq-sdks` |
    | Workflow name | `publicar.yml` |
    | Environment name | `pypi` |
@@ -130,20 +130,20 @@ chave temporária, válida por 1 hora, na hora de publicar.
 
    | Campo | Valor |
    |---|---|
-   | Repository Owner | `joseaugustopaivajr` |
+   | Repository Owner | `faro-hq` |
    | Repository | `farohq-sdks` |
    | Workflow File | `publicar.yml` |
    | Environment | (vazio) |
 
 3. Informe o **nome de usuário** do NuGet (o do perfil, não o e-mail) numa variável do repositório:
    ```bash
-   gh variable set NUGET_USER -R joseaugustopaivajr/farohq-sdks --body "SEU_USUARIO_NUGET"
+   gh variable set NUGET_USER -R faro-hq/farohq-sdks --body "SEU_USUARIO_NUGET"
    ```
 
 ## Conferir os segredos
 
 ```bash
-gh secret list -R joseaugustopaivajr/farohq-sdks
+gh secret list -R faro-hq/farohq-sdks
 ```
 
 Devem aparecer: `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `SIGNING_KEY`,
@@ -167,5 +167,5 @@ Pacote `farohq_flutter`, publisher `farohq.com.br`. Publicação manual desligad
 1. Suba `version:` em `flutter/pubspec.yaml` e escreva no `flutter/CHANGELOG.md`.
 2. Commit e push na main. O `flutter-tag.yml` cria a tag `flutter-vX.Y.Z` e roda o job `flutter` do `publicar.yml` nela.
 
-No pub.dev (Admin → Automated publishing): repositório `joseaugustopaivajr/farohq-sdks`, tag `flutter-v{{version}}`,
+No pub.dev (Admin → Automated publishing): repositório `faro-hq/farohq-sdks`, tag `flutter-v{{version}}`,
 **push** e **workflow_dispatch** marcados. Depois, atualize `FLUTTER_SDK_VERSION` em `farofront/lib/install/snippets.ts`.
