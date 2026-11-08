@@ -50,7 +50,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joseaugustopaivajr/farohq-sdks.git",
+    "url": "git+https://github.com/faro-hq/farohq-sdks.git",
     "directory": "browser"
   }
 }
